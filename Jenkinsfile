@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     echo "Starting Git checkout..."
-                    git url: 'https://github.com/shazminnasir67/toronto-webapp.git', branch: 'main', credentialsId: 'github-pat'
+                    git url: 'https://github.com/Nooreeman2004/toronto.git', branch: 'main', credentialsId: 'github-pat'
                     echo "Git checkout completed."
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
         success {
             echo "Pipeline completed successfully!"
             sh "docker-compose -p ${PROJECT_NAME} -f ${COMPOSE_FILE} logs"
-            echo "Web app should be running at http://<ec2-ip>:8082"
+            echo "Web app should be running at http://<ec2-ip>:8083"
         }
         failure {
             echo "Pipeline failed. Check logs for details."
