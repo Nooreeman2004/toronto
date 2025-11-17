@@ -1,0 +1,95 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  line-height: 1.6;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.hero-section {
+  height: 80vh;
+  background: url('toronto.jpg') no-repeat center center/cover;
+  position: relative;
+  color: white;
+}
+
+.hero-section .overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.295);
+  z-index: 1;
+}
+
+.hero-section .container {
+  z-index: 2;
+  position: relative;
+}
+
+.card {
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 12px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+footer {
+  background-color: #212529;
+}
+
+footer p {
+  margin: 0;
+}
+
+section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+#auth-status {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* User Profile Styles */
+#user-profile {
+  display: flex;
+  align-items: center;
+}
+
+#user-email {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Modal Error Styles */
+#login-error, #signup-error {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Responsive adjustments for auth elements */
+@media (max-width: 768px) {
+  #auth-status {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  #user-profile {
+    order: 2;
+    margin-left: auto;
+  }
+  
+  #auth-buttons {
+    order: 1;
+    margin-left: auto;
+  }
+}
