@@ -4,16 +4,13 @@ services:
     image: maliknoor2004/toronto-webapp:latest
     container_name: toronto_web_pipeline
     ports:
-      - "8082:3000"  
+      - "8082:3000"
     environment:
       - PORT=3000
     volumes:
       - ./firebase-service-account.json:/app/firebase-service-account.json
-      - code_volume:/app  
     networks:
       - app-network
-volumes:
-  code_volume:  
 networks:
   app-network:
     driver: bridge
