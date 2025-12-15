@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Development/Jenkins CI - builds from source
+  web-dev:
+    image: node:18
+    container_name: toronto_web_dev
+    profiles:
+      - dev
+      - jenkins
+    ports:
+      - "8083:3000"
+    environment:
+      - PORT=3000
+    working_dir: /app
+    command: sh -c "npm install && node server.js"
+    volumes:
+      - ./:/app
+    networks:
+      - toronto-network
+
+  # Production - uses pre-built image from Docker Hub
+  web-prod:
+    image: maliknoor2004/toronto-webapp:latest
+    container_name: toronto_web_prod
+    profiles:
+      - prod
+      - pipeline
+    ports:
+      - "8082:3000"
+    environment:
+      - PORT=3000
+    volumes:
+      - ./firebase-service-account.json:/app/firebase-service-account.json
+    networks:
+      - toronto-network
+
+networks:
+  toronto-network:
+    driver: bridge
