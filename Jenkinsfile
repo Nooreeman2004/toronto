@@ -42,6 +42,15 @@ pipeline {
             }
         }
 
+        stage('Setup Firebase Credentials') {
+            steps {
+                echo "🔑 Setting up Firebase service account..."
+                withCredentials([file(credentialsId: 'firebase-service-account', variable: 'FIREBASE_KEY')]) {
+                    sh 'cp $FIREBASE_KEY firebase-service-account.json'
+                }
+            }
+        }
+
         stage('Build and Deploy') {
             steps {
                 echo "🚀 Building and starting containers..."
