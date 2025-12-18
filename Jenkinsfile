@@ -259,8 +259,3 @@ pipeline {
         }
     }
 }
-            echo "📋 Final container status:"
-            sh "docker ps"
-        }
-    }
-}
