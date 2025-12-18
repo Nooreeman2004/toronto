@@ -62,8 +62,10 @@ pipeline {
         stage('Setup Firebase Credentials') {
             steps {
                 echo "🔑 Setting up Firebase service account..."
+                sh 'rm -f firebase-service-account.json'
                 withCredentials([file(credentialsId: 'firebase-service-account', variable: 'FIREBASE_KEY')]) {
                     sh 'cp $FIREBASE_KEY firebase-service-account.json'
+                    sh 'chmod 644 firebase-service-account.json'
                     sh 'ls -la firebase-service-account.json'
                 }
             }
