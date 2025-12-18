@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Development/Jenkins CI - builds from source
   web-dev:
@@ -8,6 +6,7 @@ services:
     profiles:
       - dev
       - jenkins
+      - test
     ports:
       - "8083:3000"
     environment:
@@ -16,6 +15,37 @@ services:
     command: sh -c "npm install && node server.js"
     volumes:
       - ./:/app
+    networks:
+      - toronto-network
+
+  # Maven + Chrome test runner (Java Selenium tests)
+  test-runner:
+    image: markhobson/maven-chrome:latest
+    container_name: toronto_test_runner
+    profiles:
+      - test
+    depends_on:
+      - web-dev
+    working_dir: /app
+    environment:
+      - APP_URL=http://toronto_web_dev:3000
+    volumes:
+      - ./selenium-tests:/app
+      - ./test-reports:/test-reports
+    command: >
+      bash -c "
+        echo '===========================================' &&
+        echo '🧪 Starting Maven Selenium Tests...' &&
+        echo '===========================================' &&
+        echo 'Target URL: http://toronto_web_dev:3000' &&
+        echo 'Waiting for app to be ready...' &&
+        sleep 10 &&
+        mvn clean test -Dapp.url=http://toronto_web_dev:3000 2>&1 | tee /test-reports/maven-output.log &&
+        cp -r target/surefire-reports/* /test-reports/ 2>/dev/null || true &&
+        echo '===========================================' &&
+        echo '✅ Tests completed!' &&
+        echo '==========================================='
+      "
     networks:
       - toronto-network
 
